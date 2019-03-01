@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <div class="row text-center vertical-middle-sm">
+    <p>你已经退出了登录</p>
+    <p>登录请点击<a href="{% url 'account:user_login' %}">Login</a></p>
+    </div>
+{% endblock %}
