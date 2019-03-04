@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import UserInfo, UserProfile
+import base64
 
 # Create your views here.
 
@@ -64,6 +65,8 @@ def myself(request):
     user = User.objects.get(username=request.user.username)
     user_profile = UserProfile.objects.get(user=user)
     user_info = UserInfo.objects.get(user=user)
+    # avatar = base64.b64decode(user_info.photo)
+
 
     return render(request, 'account/myself.html', {'user': user, 'userinfo': user_info, 'userprofile': user_profile})
 
@@ -111,3 +114,18 @@ def myself_edit(request):
                      'address': user_info.address, 'aboutme': user_info.aboutme})
         return render(request, 'account/myself_edit.html',
                       {'user_form': user_form, 'user_profile_form': userprofile_form, 'user_info_form': userinfo_form})
+
+
+@login_required(login_url='/account/login/')
+def my_image(request):
+    # 判断请求方式
+    if request.method == 'POST':
+        img = request.POST['img']
+        user_info = UserInfo.objects.get(user=request.user.id)
+        # print(request.POST)
+        user_info.photo = img
+        user_info.save()
+        return HttpResponse('1')
+    else:
+        return render(request, 'account/imagecrop.html', )
+

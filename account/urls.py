@@ -26,5 +26,6 @@ urlpatterns = [
     path('register/', views.register, name='user_register'),
     path('password-change/', auth_views.password_change, {'post_change_redirect':'/account/password-change-done/'}, name='password_change'),
     path('password-change-done/', auth_views.password_change_done, name='password_change_done'),
+    path('my-image/', views.my_image, name='my_image'),
 
 ]
